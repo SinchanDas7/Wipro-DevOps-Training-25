@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ipl-deployment
+  namespace: murali-ns
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: ipl
+  template:
+    metadata:
+      labels:
+        app: ipl
+    spec:
+      containers:
+        - name: c-1
+          image: muralisocial123/ipl:latest
+          ports:
+            - containerPort: 3000
+# load all configmaps values
+          envFrom:
+            - configMapRef:
+                name: ipl-configmap
+# load all secret values
+            - secretRef:
+                name: ipl-secret
